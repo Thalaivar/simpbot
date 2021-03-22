@@ -23,14 +23,14 @@ def auth_app():
 
     return api
 
-def get_user_data(api: tweepy.API):
+def get_user_data(api):
     with open(KEYS_FILE, "r") as f:
         keys = yaml.load(f, Loader=yaml.FullLoader)
     screen_name = keys["account"]
     
     return api.get_user(screen_name=screen_name)
 
-def run(api: tweepy.API, user: tweepy.User):
+def run(api, user):
     with open(KEYS_FILE, "r") as f:
         keys = yaml.load(f, Loader=yaml.FullLoader)
     last_id = keys["last"]

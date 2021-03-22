@@ -1,0 +1,71 @@
+22:05:18,753 tweepy.binder DEBUG PARAMS: {'screen_name': b'juvenile_crone'}
+22:05:18,753 requests_oauthlib.oauth1_auth DEBUG Signing request <PreparedRequest [GET]> using client <Client client_key=uWx30quKMGcaAtKzbrDwDg22G, client_secret=****, resource_owner_key=1373862256442679296-gwTQhNyM25A2yOb3tOY3Lh3pJWQ5iz, resource_owner_secret=****, signature_method=HMAC-SHA1, signature_type=AUTH_HEADER, callback_uri=None, rsa_key=None, verifier=None, realm=None, encoding=utf-8, decoding=None, nonce=None, timestamp=None>
+22:05:18,753 requests_oauthlib.oauth1_auth DEBUG Including body in call to sign: False
+22:05:18,754 oauthlib.oauth1.rfc5849 DEBUG Collected params: [('screen_name', 'juvenile_crone'), ('oauth_nonce', '120769468343759192901616430918'), ('oauth_timestamp', '1616430918'), ('oauth_version', '1.0'), ('oauth_signature_method', 'HMAC-SHA1'), ('oauth_consumer_key', 'uWx30quKMGcaAtKzbrDwDg22G'), ('oauth_token', '1373862256442679296-gwTQhNyM25A2yOb3tOY3Lh3pJWQ5iz')]
+22:05:18,754 oauthlib.oauth1.rfc5849 DEBUG Normalized params: oauth_consumer_key=uWx30quKMGcaAtKzbrDwDg22G&oauth_nonce=120769468343759192901616430918&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1616430918&oauth_token=1373862256442679296-gwTQhNyM25A2yOb3tOY3Lh3pJWQ5iz&oauth_version=1.0&screen_name=juvenile_crone
+22:05:18,754 oauthlib.oauth1.rfc5849 DEBUG Normalized URI: https://api.twitter.com/1.1/users/show.json
+22:05:18,754 oauthlib.oauth1.rfc5849 DEBUG Signing: signature base string: GET&https%3A%2F%2Fapi.twitter.com%2F1.1%2Fusers%2Fshow.json&oauth_consumer_key%3DuWx30quKMGcaAtKzbrDwDg22G%26oauth_nonce%3D120769468343759192901616430918%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1616430918%26oauth_token%3D1373862256442679296-gwTQhNyM25A2yOb3tOY3Lh3pJWQ5iz%26oauth_version%3D1.0%26screen_name%3Djuvenile_crone
+22:05:18,754 oauthlib.oauth1.rfc5849 DEBUG Signature: 15vz56AYgNTg5PZhMpKWJjGxzoQ=
+22:05:18,754 requests_oauthlib.oauth1_auth DEBUG Updated url: https://api.twitter.com/1.1/users/show.json?screen_name=juvenile_crone
+22:05:18,754 requests_oauthlib.oauth1_auth DEBUG Updated headers: {'Host': 'api.twitter.com', 'Authorization': 'OAuth oauth_nonce="120769468343759192901616430918", oauth_timestamp="1616430918", oauth_version="1.0", oauth_signature_method="HMAC-SHA1", oauth_consumer_key="uWx30quKMGcaAtKzbrDwDg22G", oauth_token="1373862256442679296-gwTQhNyM25A2yOb3tOY3Lh3pJWQ5iz", oauth_signature="15vz56AYgNTg5PZhMpKWJjGxzoQ%3D"'}
+22:05:18,754 requests_oauthlib.oauth1_auth DEBUG Updated body: None
+22:05:18,771 urllib3.connectionpool DEBUG Starting new HTTPS connection (1): api.twitter.com:443
+22:05:19,216 urllib3.connectionpool DEBUG https://api.twitter.com:443 "GET /1.1/users/show.json?screen_name=juvenile_crone HTTP/1.1" 200 2530
+22:05:19,221 tweepy.binder DEBUG PARAMS: {'user_id': b'1092024289', 'screen_name': b'juvenile_crone', 'exclude_replies': b'False', 'include_rts': b'False', 'count': b'100'}
+22:05:19,221 requests_oauthlib.oauth1_auth DEBUG Signing request <PreparedRequest [GET]> using client <Client client_key=uWx30quKMGcaAtKzbrDwDg22G, client_secret=****, resource_owner_key=1373862256442679296-gwTQhNyM25A2yOb3tOY3Lh3pJWQ5iz, resource_owner_secret=****, signature_method=HMAC-SHA1, signature_type=AUTH_HEADER, callback_uri=None, rsa_key=None, verifier=None, realm=None, encoding=utf-8, decoding=None, nonce=None, timestamp=None>
+22:05:19,221 requests_oauthlib.oauth1_auth DEBUG Including body in call to sign: False
+22:05:19,222 oauthlib.oauth1.rfc5849 DEBUG Collected params: [('user_id', '1092024289'), ('screen_name', 'juvenile_crone'), ('exclude_replies', 'False'), ('include_rts', 'False'), ('count', '100'), ('oauth_nonce', '92414422545470267631616430919'), ('oauth_timestamp', '1616430919'), ('oauth_version', '1.0'), ('oauth_signature_method', 'HMAC-SHA1'), ('oauth_consumer_key', 'uWx30quKMGcaAtKzbrDwDg22G'), ('oauth_token', '1373862256442679296-gwTQhNyM25A2yOb3tOY3Lh3pJWQ5iz')]
+22:05:19,222 oauthlib.oauth1.rfc5849 DEBUG Normalized params: count=100&exclude_replies=False&include_rts=False&oauth_consumer_key=uWx30quKMGcaAtKzbrDwDg22G&oauth_nonce=92414422545470267631616430919&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1616430919&oauth_token=1373862256442679296-gwTQhNyM25A2yOb3tOY3Lh3pJWQ5iz&oauth_version=1.0&screen_name=juvenile_crone&user_id=1092024289
+22:05:19,222 oauthlib.oauth1.rfc5849 DEBUG Normalized URI: https://api.twitter.com/1.1/statuses/user_timeline.json
+22:05:19,222 oauthlib.oauth1.rfc5849 DEBUG Signing: signature base string: GET&https%3A%2F%2Fapi.twitter.com%2F1.1%2Fstatuses%2Fuser_timeline.json&count%3D100%26exclude_replies%3DFalse%26include_rts%3DFalse%26oauth_consumer_key%3DuWx30quKMGcaAtKzbrDwDg22G%26oauth_nonce%3D92414422545470267631616430919%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1616430919%26oauth_token%3D1373862256442679296-gwTQhNyM25A2yOb3tOY3Lh3pJWQ5iz%26oauth_version%3D1.0%26screen_name%3Djuvenile_crone%26user_id%3D1092024289
+22:05:19,222 oauthlib.oauth1.rfc5849 DEBUG Signature: hC3b+TYfsZ95+u4+lwsw2Us0yLU=
+22:05:19,222 requests_oauthlib.oauth1_auth DEBUG Updated url: https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=1092024289&screen_name=juvenile_crone&exclude_replies=False&include_rts=False&count=100
+22:05:19,222 requests_oauthlib.oauth1_auth DEBUG Updated headers: {'Host': 'api.twitter.com', 'Authorization': 'OAuth oauth_nonce="92414422545470267631616430919", oauth_timestamp="1616430919", oauth_version="1.0", oauth_signature_method="HMAC-SHA1", oauth_consumer_key="uWx30quKMGcaAtKzbrDwDg22G", oauth_token="1373862256442679296-gwTQhNyM25A2yOb3tOY3Lh3pJWQ5iz", oauth_signature="hC3b%2BTYfsZ95%2Bu4%2Blwsw2Us0yLU%3D"'}
+22:05:19,222 requests_oauthlib.oauth1_auth DEBUG Updated body: None
+22:05:19,224 urllib3.connectionpool DEBUG Starting new HTTPS connection (1): api.twitter.com:443
+22:05:19,717 urllib3.connectionpool DEBUG https://api.twitter.com:443 "GET /1.1/statuses/user_timeline.json?user_id=1092024289&screen_name=juvenile_crone&exclude_replies=False&include_rts=False&count=100 HTTP/1.1" 200 262459
+22:12:03,47 root INFO Retweeted tweet with ID: 1373287202197737472
+22:12:03,541 root INFO Retweeted tweet with ID: 1373287460764008450
+22:12:04,37 root INFO Retweeted tweet with ID: 1373292756362096641
+22:12:04,536 root INFO Retweeted tweet with ID: 1373294584239775757
+22:12:05,37 root INFO Retweeted tweet with ID: 1373295496245112832
+22:12:05,507 root INFO Liked tweet with ID: 1373295768992239617
+22:12:06,2 root INFO Retweeted tweet with ID: 1373295768992239617
+22:12:06,477 root INFO Liked tweet with ID: 1373295985716195330
+22:12:06,965 root INFO Retweeted tweet with ID: 1373295985716195330
+22:12:07,545 root INFO Retweeted tweet with ID: 1373300966485753856
+22:12:08,51 root INFO Retweeted tweet with ID: 1373354203649769474
+22:12:08,622 root INFO Liked tweet with ID: 1373354208125063170
+22:12:09,115 root INFO Retweeted tweet with ID: 1373354208125063170
+22:12:09,611 root INFO Retweeted tweet with ID: 1373370574743818245
+22:12:10,87 root INFO Liked tweet with ID: 1373413015266062338
+22:12:10,678 root INFO Retweeted tweet with ID: 1373413015266062338
+22:12:11,167 root INFO Retweeted tweet with ID: 1373424806691934209
+22:12:11,658 root INFO Retweeted tweet with ID: 1373562975412310020
+22:12:12,178 root INFO Retweeted tweet with ID: 1373563704302661638
+22:12:12,660 root INFO Liked tweet with ID: 1373563825534824454
+22:12:13,161 root INFO Retweeted tweet with ID: 1373563825534824454
+22:12:13,678 root INFO Retweeted tweet with ID: 1373570584341311488
+22:12:14,164 root INFO Retweeted tweet with ID: 1373599362899582976
+22:12:14,642 root INFO Liked tweet with ID: 1373635739657793539
+22:12:16,11 root INFO Retweeted tweet with ID: 1373635739657793539
+22:12:16,505 root INFO Retweeted tweet with ID: 1373636650471845894
+22:12:17,12 root INFO Retweeted tweet with ID: 1373644686779289603
+22:12:17,501 root INFO Liked tweet with ID: 1373644850336133123
+22:12:17,997 root INFO Retweeted tweet with ID: 1373644850336133123
+22:12:18,512 root INFO Liked tweet with ID: 1373715058350452737
+22:12:19,13 root INFO Retweeted tweet with ID: 1373715058350452737
+22:12:19,509 root INFO Retweeted tweet with ID: 1373720378288205824
+22:12:19,986 root INFO Liked tweet with ID: 1373721049410404355
+22:12:20,600 root INFO Retweeted tweet with ID: 1373721049410404355
+22:12:21,83 root INFO Retweeted tweet with ID: 1373858957710651395
+22:12:21,578 root INFO Retweeted tweet with ID: 1373901923414208512
+22:12:22,81 root INFO Retweeted tweet with ID: 1373909117555912705
+22:12:22,579 root INFO Retweeted tweet with ID: 1373984986689269761
+22:12:23,58 root INFO Retweeted tweet with ID: 1373987022117871618
+22:12:23,558 root INFO Retweeted tweet with ID: 1373987422367715334
+22:12:24,68 root INFO Retweeted tweet with ID: 1373989312497262599
+22:16:26,100 root INFO Liked tweet with ID: 1374039610104324100
+22:16:26,578 root INFO Retweeted tweet with ID: 1374039610104324100
+22:19:09,170 root INFO Liked tweet with ID: 1374040343054675970
+22:19:09,638 root INFO Retweeted tweet with ID: 1374040343054675970

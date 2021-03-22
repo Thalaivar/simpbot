@@ -23,14 +23,14 @@ def auth_app():
 
     return api
 
-def get_user_data(api):
+def get_user_data(api: tweepy.API):
     with open(KEYS_FILE, "r") as f:
         keys = yaml.load(f, Loader=yaml.FullLoader)
     screen_name = keys["account"]
     
     return api.get_user(screen_name=screen_name)
 
-def run(api, user):
+def run(api: tweepy.API, user: tweepy.User):
     with open(KEYS_FILE, "r") as f:
         keys = yaml.load(f, Loader=yaml.FullLoader)
     last_id = keys["last"]
@@ -51,7 +51,7 @@ def run(api, user):
         if (d.id > last_id) and (d.in_reply_to_screen_name is None or d.in_reply_to_screen_name == keys["account"]):
             if not d.favorited:
                 api.create_favorite(d.id)
-                logging.info("Liked tweet with ID: {d.id_str}")
+                logging.info(f"Liked tweet with ID: {d.id_str}")
             if not d.retweeted:
                 api.retweet(d.id)
                 logging.info(f"Retweeted tweet with ID: {d.id_str}")

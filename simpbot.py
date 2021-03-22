@@ -51,10 +51,10 @@ def run(api: tweepy.API, user: tweepy.User):
         if (d.id > last_id) and (d.in_reply_to_screen_name is None or d.in_reply_to_screen_name == keys["account"]):
             if not d.favorited:
                 api.create_favorite(d.id)
-                logging.info(f"Liked tweet with ID: {d.id_str}")
+                logging.info("Liked tweet with ID: {}".format(d.id_str))
             if not d.retweeted:
                 api.retweet(d.id)
-                logging.info(f"Retweeted tweet with ID: {d.id_str}")
+                logging.info("Retweeted tweet with ID: {}".format(d.id_str))
             last_id = int(d.id_str)
     
     keys["last"] = last_id

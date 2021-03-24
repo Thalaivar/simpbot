@@ -11,7 +11,7 @@ logging.basicConfig(
                 level=logging.INFO
             )
 
-KEYS_FILE = "./keys.yaml"
+KEYS_FILE = "/home/dhruvlaad/keys.yaml"
 
 def auth_app():
     with open(KEYS_FILE, "r") as f:

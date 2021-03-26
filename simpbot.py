@@ -2,6 +2,11 @@ import time
 import tweepy
 import yaml
 import logging
+import schedule
+import random
+import pandas as pd
+
+from lyricsScraper import LyricsScraper
 
 logging.basicConfig(
                 filename="tweepy.log",
@@ -11,63 +16,73 @@ logging.basicConfig(
                 level=logging.INFO
             )
 
-KEYS_FILE = "/home/dhruvlaad/keys.yaml"
+# BASE_DIR = "/home/dhruvlaad"
+BASE_DIR = "."
+KEYS_FILE = f"{BASE_DIR}/keys.yaml"
+SONGS_FILE = f"{BASE_DIR}/songsfile.csv"
+MAX_LEN = 280
 
-def auth_app():
-    with open(KEYS_FILE, "r") as f:
-        keys = yaml.load(f, Loader=yaml.FullLoader)
+class Simpbot():
+    def __init__(self, keys_file: str, lyrics_freq=1, check_freq=30):
+        self.keys_file = keys_file
+        with open(keys_file, "r") as f:
+            keys = yaml.load(f, Loader=yaml.FullLoader)
+        self.keys = keys
+
+        auth = tweepy.OAuthHandler(keys["api_key"], keys["api_key_secret"])
+        auth.set_access_token(keys["access_token"], keys["access_token_secret"])
+        self.api = tweepy.API(auth)
+        self.user_data = self.api.get_user(keys["account"])
+
+        self.scraper = LyricsScraper(keys["google_cse_api"], keys["google_cse_id"])
+        self.lyrics_freq = lyrics_freq
+        self.check_freq = check_freq
+
+    def rt_and_like(self):
+        kwargs = {
+                "user_id": self.user_data.id_str,
+                "screen_name": self.user_data.screen_name,
+                "exclude_replies": False,
+                "include_rts": False,
+                "count": 20
+            }
+        last_id = None
+
+        while True:
+            if last_id:
+                kwargs["max_id"] = last_id
+            data = list(self.api.user_timeline(**kwargs))
+
+            found = False
+            for d in data:
+                if d.in_reply_to_screen_name == self.keys["account"]:
+                    if not d.favorited:
+                        self.api.create_favorite(d.id)
+                        logging.info(f"Liked tweet with ID: {d.id_str} ; text: {d.text}")
+                    if not d.retweeted:
+                        self.api.retweet(d.id)
+                        logging.info(f"Retweeted tweet with ID: {d.id_str} ; text: {d.text}")
+                    if d.retweeted and d.favorited:
+                        found = True
+
+            if found:
+                break
+            last_id = data[-1].id
     
-    auth = tweepy.OAuthHandler(keys["api_key"], keys["api_key_secret"])
-    auth.set_access_token(keys["access_token"], keys["access_token_secret"])
-    api = tweepy.API(auth)
+    def tweet_lyrics(self, songsfile: str):
+        songs = pd.read_csv(songsfile)
+        idx = random.randint(0, songs.shape[0]-1)        
+        lyrics = self.scraper.scrape(songs["Track Name"][idx] + " " + songs["Arist(s) Name"][idx]) 
+        return random.sample(lyrics, 1)
 
-    return api
+def spin():
+    bot = Simpbot(KEYS_FILE)
+    # schedule.every(self.lyrics_freq).hour.do(self.tweet_lyrics, songsfile=SONGS_FILE)
+    schedule.every(bot.check_freq).seconds.do(bot.rt_and_like)
 
-def get_user_data(api: tweepy.API):
-    with open(KEYS_FILE, "r") as f:
-        keys = yaml.load(f, Loader=yaml.FullLoader)
-    screen_name = keys["account"]
-    
-    return api.get_user(screen_name=screen_name)
-
-def run(api: tweepy.API, user: tweepy.User):
-    with open(KEYS_FILE, "r") as f:
-        keys = yaml.load(f, Loader=yaml.FullLoader)
-    last_id = keys["last"]
-    
-    if not last_id:
-        last_id = -1
-    
-    data = list(api.user_timeline(
-                    user_id=user.id_str, 
-                    screen_name=user.screen_name, 
-                    exclude_replies=False, 
-                    include_rts=False,
-                    count=10
-                    )
-                )
-
-    for d in data[::-1]:
-        if (d.id > last_id) and (d.in_reply_to_screen_name is None or d.in_reply_to_screen_name == keys["account"]):
-            if not d.favorited:
-                api.create_favorite(d.id)
-                logging.info(f"Liked tweet with ID: {d.id_str}")
-            if not d.retweeted:
-                api.retweet(d.id)
-                logging.info(f"Retweeted tweet with ID: {d.id_str}")
-            last_id = int(d.id_str)
-    
-    keys["last"] = last_id
-    with open(KEYS_FILE, "w") as f:
-        yaml.dump(keys, f, default_flow_style=False)    
-
-def spin(freq=120):
-    freq = 60 * 60 // freq
-    api = auth_app()
-    user = get_user_data(api)
     while True:
-        run(api, user)
-        time.sleep(freq)
+        schedule.run_pending()
+        time.sleep(1)
 
 if __name__ == "__main__":
     spin()

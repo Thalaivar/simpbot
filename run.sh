@@ -1,5 +1,5 @@
 #!/bin/bash
 
 cd ~/simpbot/
-git branch v2.0
-python3 simpbot.py &
+git checkout v2.0
+sudo -i -u dhruvlaad python3 /home/dhruvlaad/simpbot/simpbot.py &

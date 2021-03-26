@@ -9,15 +9,15 @@ import pandas as pd
 from lyricsScraper import LyricsScraper
 
 logging.basicConfig(
-                filename="tweepy.log",
+                filename="/home/dhruvlaad/tweepy.log",
                 filemode='a',
                 format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                 datefmt='%H:%M:%S',
                 level=logging.INFO
             )
 
-# BASE_DIR = "/home/dhruvlaad"
-BASE_DIR = "."
+BASE_DIR = "/home/dhruvlaad"
+# BASE_DIR = "."
 KEYS_FILE = f"{BASE_DIR}/keys.yaml"
 SONGS_FILE = f"{BASE_DIR}/songsfile.csv"
 MAX_LEN = 280

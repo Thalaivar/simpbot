@@ -55,7 +55,7 @@ class Simpbot():
 
             found = False
             for d in data:
-                if d.in_reply_to_screen_name == self.keys["account"]:
+                if d.in_reply_to_screen_name == self.keys["account"] or d.in_reply_to_screen_name == None:
                     if not d.favorited:
                         self.api.create_favorite(d.id)
                         logging.info(f"Liked tweet with ID: {d.id_str} ; text: {d.text}")
@@ -86,3 +86,4 @@ def spin():
 
 if __name__ == "__main__":
     spin()
+    

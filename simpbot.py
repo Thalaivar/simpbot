@@ -77,14 +77,13 @@ def tweet(api: tweepy.API):
     ]
 
     inputs = tokenizer.encode(random.sample(prompts, 1)[0], return_tensors='pt')
-    outputs = model.generate(inputs, max_length=10, do_sample=True)
+    outputs = model.generate(inputs, max_length=100, do_sample=True)
     text = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
-    end_marks = [',', '.', '?']
-    for mark in end_marks:
-        if mark in text:
-            text = text.split(mark)[0]
-            break
+    end_marks = [text.index(m) for m in [',', '.', '?', '\n'] if m in text]
+    if len(end_marks) > 0:
+        end_marks = min(end_marks)
+        text = text[:end_marks]
     
     text = text.replace("she ", "anaita ")
     api.update_status(text)
@@ -92,6 +91,9 @@ def tweet(api: tweepy.API):
 def spin():
     api = auth_app()
     user = get_user_data(api)
+    
+    tweet(api)
+    
     schedule.every(5).seconds.do(lambda: run(api, user))
     schedule.every(4).hours.do(lambda: tweet(api))
     while True:

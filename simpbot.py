@@ -1,8 +1,11 @@
 import time
-import tweepy
 import yaml
-import logging
+import torch
+import tweepy
+import random
 import schedule
+import logging
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
 logging.basicConfig(
                 filename="tweepy.log",
@@ -15,6 +18,9 @@ logging.basicConfig(
 KEYS_FILE = "./keys.yaml"
 TWEETS_PER_CALL = 100
 MAX_TWEETS = 1000
+
+tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
+model = GPT2LMHeadModel.from_pretrained('gpt2')
 
 def auth_app():
     with open(KEYS_FILE, "r") as f:
@@ -61,11 +67,33 @@ def run(api: tweepy.API, user: tweepy.User):
         
         curr_tweets += TWEETS_PER_CALL
 
+def tweet(api: tweepy.API):
+    prompts = [
+        "she is the",
+        "she is",
+        "she has",
+        "she can",
+        "she will"
+    ]
+
+    inputs = tokenizer.encode(random.sample(prompts, 1)[0], return_tensors='pt')
+    outputs = model.generate(inputs, max_length=10, do_sample=True)
+    text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+    end_marks = [',', '.', '?']
+    for mark in end_marks:
+        if mark in text:
+            text = text.split(mark)[0]
+            break
+    
+    text = text.replace("she ", "anaita ")
+    api.update_status(text)
+    
 def spin():
     api = auth_app()
     user = get_user_data(api)
     schedule.every(5).seconds.do(lambda: run(api, user))
-
+    schedule.every(4).hours.do(lambda: tweet(api))
     while True:
         schedule.run_pending()
         time.sleep(1)
